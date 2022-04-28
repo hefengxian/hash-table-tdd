@@ -20,3 +20,18 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## Charpter
+
+Write donw every charpter what I was learned
+
+
+### Build a Hash Table Prototype in Python With TDD
+
+Find a Value by Key
+
+- `__getitem__()` for `[key]` syntax
+- `__contains__()` for `key in xxx` syntax
+- `except` with `else` (Usually I think it's not necessary, just keep the `return` in the `try` block)
+- `pytest.fixture` let a function's return value to be a parameter
+
+

@@ -45,3 +45,40 @@ def test_should_insert_none_value():
 @pytest.mark.skip
 def test_should_not_shrink_when_removing_elements():
     pass
+
+@pytest.fixture
+def hash_table():
+    hashtable = HashTable(capacity=100)
+    hashtable['hola'] = "Hello"
+    hashtable[98.2] = 39
+    hashtable[False] = True
+    return hashtable
+
+def test_should_find_value_by_key(hash_table):
+    assert hash_table['hola'] == 'Hello'
+    assert hash_table[98.2] == 39
+    assert hash_table[False] == True
+
+def test_should_raise_error_on_missing_key():
+    hash_table = HashTable(capacity=100)
+    with pytest.raises(KeyError) as exception_info:
+        hash_table['missing_key']
+    assert exception_info.value.args[0] == 'missing_key'
+
+def test_should_find_key(hash_table):
+    assert 'hola' in hash_table
+
+def test_should_not_find_key(hash_table):
+    assert 'missing_key' not in hash_table
+    
+def test_should_get_value(hash_table):
+    assert hash_table.get('hola') == 'Hello'
+
+def test_should_get_none_when_missing_key(hash_table):
+    assert hash_table.get('missing_key') is None
+
+def test_should_get_default_value_when_missing_key(hash_table):
+    assert hash_table.get('missing_key', 'default') == 'default'
+
+def test_should_get_value_with_default(hash_table):
+    assert hash_table.get('hola', 'default') == 'Hello'
