@@ -34,4 +34,7 @@ Find a Value by Key
 - `except` with `else` (Usually I think it's not necessary, just keep the `return` in the `try` block)
 - `pytest.fixture` let a function's return value to be a parameter
 
+Delete a Key-Value Pair
+
+- If a class has `__setitem__`, you can use `instance[key] = value`  or you can use `self[key] = value` inside the class
 
