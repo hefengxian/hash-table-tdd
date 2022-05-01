@@ -38,3 +38,7 @@ Delete a Key-Value Pair
 
 - If a class has `__setitem__`, you can use `instance[key] = value`  or you can use `self[key] = value` inside the class
 
+Update the Value of an Existing Pair
+
+- Nothing
+
