@@ -102,8 +102,9 @@ def test_should_raise_key_error_when_deleting(hash_table):
 def test_should_update_value(hash_table):
     assert hash_table['hola'] == 'Hello'
     hash_table['hola'] = 'Bello'
+    assert hash_table['hola'] == 'Bello'
     assert hash_table[98.2] == 39
-    assert hash_table[False] == True
+    assert hash_table[False] is True
     assert len(hash_table) == 100
 
 
