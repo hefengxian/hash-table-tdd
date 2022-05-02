@@ -1,5 +1,5 @@
 import pytest
-from hashtable import HashTable, BLANK
+from hashtable import HashTable
 
 """
 Test case should be as independent and atomic as possible
@@ -20,7 +20,7 @@ def test_should_report_capacity():
     assert len(HashTable(capacity=10)) == 10
 
 def test_should_create_empty_value_slots():
-    assert HashTable(capacity=3).values == [BLANK, BLANK, BLANK]
+    assert HashTable(capacity=3).pairs == [None, None, None]
 
 def test_should_insert_key_value_pairs():
     hashtable = HashTable(capacity=100)
@@ -29,22 +29,22 @@ def test_should_insert_key_value_pairs():
     hashtable[98.2] = 39
     hashtable[False] = True
 
-    assert 'Hello' in hashtable.values
-    assert 39 in hashtable.values
-    assert True in hashtable.values
+    assert ('hola', 'Hello') in hashtable.pairs
+    assert (98.2, 39) in hashtable.pairs
+    assert (False, True) in hashtable.pairs
     assert len(hashtable) == 100
 
 def test_should_not_contain_none_value_when_created():
-    assert None not in HashTable(capacity=10).values
+    assert None not in [pair.value for pair in HashTable(capacity=10).pairs if pair]
 
 def test_should_insert_none_value():
     hashtable = HashTable(capacity=10)
     hashtable['k'] = None
-    assert None in hashtable.values
+    assert ('k', None) in hashtable.pairs
 
-@pytest.mark.skip
-def test_should_not_shrink_when_removing_elements():
-    pass
+# @pytest.mark.skip
+# def test_should_not_shrink_when_removing_elements():
+#     pass
 
 @pytest.fixture
 def hash_table():
@@ -83,15 +83,14 @@ def test_should_get_default_value_when_missing_key(hash_table):
 def test_should_get_value_with_default(hash_table):
     assert hash_table.get('hola', 'default') == 'Hello'
 
-def test_should_delete_key_value_paire(hash_table):
+def test_should_delete_key_value_pair(hash_table):
     assert 'hola' in hash_table
-    assert 'Hello' in hash_table.values
+    assert ('hola', 'Hello') in hash_table.pairs
     assert len(hash_table) == 100
 
     del hash_table['hola']
-
     assert 'hola' not in hash_table
-    assert 'Hello' not in hash_table.values
+    assert ('hola', 'Hello') not in hash_table.pairs
     assert len(hash_table) == 100
 
 def test_should_raise_key_error_when_deleting(hash_table):
