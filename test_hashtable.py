@@ -20,7 +20,7 @@ def test_should_report_capacity():
     assert len(HashTable(capacity=10)) == 10
 
 def test_should_create_empty_value_slots():
-    assert HashTable(capacity=3).pairs == [None, None, None]
+    assert HashTable(capacity=3)._pairs == [None, None, None]
 
 def test_should_insert_key_value_pairs():
     hashtable = HashTable(capacity=100)
@@ -106,4 +106,6 @@ def test_should_update_value(hash_table):
     assert hash_table[False] is True
     assert len(hash_table) == 100
 
+def test_should_return_copy_of_pairs(hash_table):
+    assert hash_table.pairs is not hash_table.pairs
 
