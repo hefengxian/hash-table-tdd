@@ -1,4 +1,5 @@
 import pytest
+from pytest_unordered import unordered
 from hashtable import HashTable
 
 """
@@ -35,7 +36,7 @@ def test_should_insert_key_value_pairs():
     assert len(hashtable) == 100
 
 def test_should_not_contain_none_value_when_created():
-    assert None not in [pair.value for pair in HashTable(capacity=10).pairs if pair]
+    assert None not in HashTable(capacity=10).values
 
 def test_should_insert_none_value():
     hashtable = HashTable(capacity=10)
@@ -109,3 +110,46 @@ def test_should_update_value(hash_table):
 def test_should_return_copy_of_pairs(hash_table):
     assert hash_table.pairs is not hash_table.pairs
 
+def test_should_return_duplicate_values():
+    ht = HashTable(capacity=10)
+    ht['Alice'] = 23
+    ht['Bob'] = 34
+    ht['Joe'] = 34
+    assert [23, 34, 34] == sorted(ht.values)
+
+def test_should_get_values(hash_table):
+    assert unordered(hash_table.values) == ['Hello', True, 39]
+
+def test_should_get_value_of_empty_hash_table():
+    assert HashTable(capacity=100).values == []
+
+def test_should_return_copy_of_values(hash_table):
+    assert hash_table.values is not hash_table.values
+
+def test_should_get_keys(hash_table):
+    assert hash_table.keys == {'hola', 98.2, False}
+
+def test_should_get_key_of_empty_hash_table():
+    # there is no empty set literal 
+    assert HashTable(capacity=10).keys == set()
+
+def test_should_return_copy_of_keys(hash_table):
+    assert hash_table.keys is not hash_table.keys
+
+def test_should_return_pairs(hash_table):
+    assert hash_table.pairs == {
+        ("hola", "Hello"),
+        (98.2, 39),
+        (False, True)
+    }
+
+def test_should_get_pairs_of_empty_hash_table():
+    assert HashTable(capacity=10).pairs == set()
+
+def test_should_convert_to_dict(hash_table):
+    dictionary = dict(hash_table.pairs)
+    assert set(dictionary.keys()) == hash_table.keys
+    assert set(dictionary.items()) == hash_table.pairs
+    assert list(dictionary.values()) == unordered(hash_table.values)
+
+    
