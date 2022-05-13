@@ -169,3 +169,15 @@ def test_should_report_capacity_of_empty_hashtable():
 def test_should_report_capacity(hash_table):
     assert hash_table.capacity == 100
 
+def test_should_iterate_over_keys(hash_table):
+    for k in hash_table:
+        assert k in ('hola', 98.2, False)
+
+def test_should_iterate_over_values(hash_table):
+    for value in hash_table.values:
+        assert value in ('Hello', 39, True)
+
+def test_should_iterate_over_pairs(hash_table):
+    for key, value in hash_table.pairs:
+        assert key in hash_table.keys
+        assert value in hash_table.values

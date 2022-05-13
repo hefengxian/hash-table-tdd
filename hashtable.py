@@ -61,3 +61,6 @@ class HashTable:
     @property
     def capacity(self):
         return len(self._slots)
+
+    def __iter__(self):
+        yield from self.keys
