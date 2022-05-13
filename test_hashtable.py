@@ -181,3 +181,31 @@ def test_should_iterate_over_pairs(hash_table):
     for key, value in hash_table.pairs:
         assert key in hash_table.keys
         assert value in hash_table.values
+
+def test_should_use_dict_literal_for_str(hash_table):
+    assert str(hash_table) in {
+        "{'hola': 'Hello', 98.2: 39, False: True}",
+        "{'hola': 'Hello', False: True, 98.2: 39}",
+        "{98.2: 39, 'hola': 'Hello', False: True}",
+        "{98.2: 39, False: True, 'hola': 'Hello'}",
+        "{False: True, 'hola': 'Hello', 98.2: 39}",
+        "{False: True, 98.2: 39, 'hola': 'Hello'}",
+    }
+
+def test_should_create_hashtable_from_dict():
+    dictionary = {'hola': 'Hello', 98.2: 39, False: True}
+    hash_table = HashTable.from_dict(dictionary)
+    assert hash_table.capacity == len(dictionary) * 10
+    assert hash_table.keys == set(dictionary.keys())
+    assert hash_table.pairs == set(dictionary.items())
+    assert unordered(hash_table.values) == list(dictionary.values())
+
+def test_should_have_canonical_string_representation(hash_table):
+    assert repr(hash_table) in {
+        "HashTable.from_dict({'hola': 'Hello', 98.2: 39, False: True})",
+        "HashTable.from_dict({'hola': 'Hello', False: True, 98.2: 39})",
+        "HashTable.from_dict({98.2: 39, 'hola': 'Hello', False: True})",
+        "HashTable.from_dict({98.2: 39, False: True, 'hola': 'Hello'})",
+        "HashTable.from_dict({False: True, 'hola': 'Hello', 98.2: 39})",
+        "HashTable.from_dict({False: True, 98.2: 39, 'hola': 'Hello'})",
+    }
