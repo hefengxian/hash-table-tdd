@@ -209,3 +209,38 @@ def test_should_have_canonical_string_representation(hash_table):
         "HashTable.from_dict({False: True, 'hola': 'Hello', 98.2: 39})",
         "HashTable.from_dict({False: True, 98.2: 39, 'hola': 'Hello'})",
     }
+
+def test_should_compare_equal_to_itself(hash_table):
+    assert hash_table == hash_table
+
+def test_should_compare_equal_to_copy(hash_table):
+    assert hash_table is not hash_table.copy()
+    assert hash_table == hash_table.copy()
+
+def test_should_compare_equal_different_key_value_order():
+    h1 = HashTable.from_dict({'a': 1, 'b': 2, 'c': 3})
+    h2 = HashTable.from_dict({'b': 2, 'a': 1, 'c': 3})
+    print(h1)
+    print(h2)
+    assert h1 == h2
+
+def test_should_compare_unequal(hash_table):
+    other = HashTable.from_dict({'aaa': 'bbb'})
+    assert hash_table != other
+
+def test_should_compare_unequal_another_data_type(hash_table):
+    assert hash_table != 23
+
+def test_should_copy_keys_values_pairs_capacity(hash_table):
+    copy = hash_table.copy()
+    assert copy is not hash_table
+    assert set(copy.keys) == set(hash_table.keys)
+    assert unordered(copy.values) == hash_table.values
+    assert set(copy.pairs) == set(hash_table.pairs)
+    assert copy.capacity == hash_table.capacity
+
+def test_should_compare_equal_different_capacity():
+    data = {'a': 1, 'b': 2}
+    h1 = HashTable.from_dict(data, 30)
+    h2 = HashTable.from_dict(data, 50)
+    assert h1 == h2

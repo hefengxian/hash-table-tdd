@@ -82,3 +82,13 @@ class HashTable:
     def __repr__(self):
         class_name = self.__class__.__name__
         return f"{class_name}.from_dict({str(self)})"
+
+    def __eq__(self, other):
+        if other is self:
+            return True
+        if type(other) is not type(self):
+            return False
+        return set(other.pairs) == set(self.pairs)
+
+    def copy(self):
+        return HashTable.from_dict(dict(self.pairs), self.capacity)
